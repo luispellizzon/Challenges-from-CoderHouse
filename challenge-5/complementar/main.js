@@ -1,5 +1,5 @@
 
-
+/* Criar funcao para rodar o aplicativo */
 const primeNumberSimulator = () =>{
     const number = prompt("Insira um numero inteiro positivo:")
     const numCheck = formatNumberAndCheck(number)
@@ -60,10 +60,9 @@ function checkIsPrimeNumber (numObject){
         alert(errorString)
     }
 
- 
-
+    /* Recursive para inicializar app */
     primeNumberSimulator();
 }
 
-
+/* iniciar aplicacao */
 primeNumberSimulator(); 
