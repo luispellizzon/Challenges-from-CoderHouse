@@ -83,7 +83,7 @@ main{
 .sticky-container{
     position: relative;
     background-color: white ;
-    min-height: 550px;
+    height: 550px;
     border-radius: 20px;
 }
 
@@ -103,7 +103,7 @@ main{
 }
 
 .sticky-header i{
-    font-size: 1.4rem;
+    font-size: 1.3rem;
 }
 
 .sticky-header .add-note{
@@ -166,6 +166,25 @@ main{
     }
 }
 
+.sticky-notes-container{
+    background-color: #0AA4F6;
+    height: 100%;
+    width: 100%;
+    border-radius: 0px 0px 20px 20px;
+    overflow: hidden;
+}
+
+.sticky-notes-container h2{
+    font-size: 2rem;
+    padding: .5rem 1rem;
+}
+
+.sticky-notes{
+    background-color: #7049F0;
+    height: 100%;
+}
+
+
 @media (min-width: 600px){
    .sticky-header{
     position: absolute;
@@ -187,5 +206,11 @@ main{
     display: flex;
     flex-direction: column;
     gap: 1.2rem;
+   }
+
+   .sticky-notes-container{
+   padding-left: 7rem ;
+   padding-top: 1.5rem;
+   border-radius: 20px 20px 20px 20px;
    }
 }
