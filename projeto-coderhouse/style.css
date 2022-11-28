@@ -1,10 +1,70 @@
-*{
-    padding: 0;
-    margin: 0;
-    box-sizing: border-box;
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400&display=swap');
+:root{
+    --light-gray: #F1F3F8;
+    --gray: #BEC5D7;
+    --green: #C6D947;
+    --red: #F3542A;
+    --orange: #F5972C;
+    --purple:#7049F0;
+    --blue: #0AA4F6;
+    --black: #31291D;
 }
+* {
+    margin: 0;
+    padding: 0;
+    text-decoration: 0;
+    box-sizing: border-box;
+    transition: all ease 0.2s;
+    list-style-type: none;
+  }
+  
+  /* A elements that don't have a class get default styles */
+  a:not([class]) {
+    text-decoration-skip-ink: auto;
+  }
+  
+  /* Make images easier to work with */
+  img,
+  picture,
+  source {
+    max-width: 100%;
+    display: block;
+    object-fit: cover;
+    line-height: 0;
+  }
+  
+  /* Inherit fonts for inputs and buttons */
+  input,
+  button,
+  textarea,
+  select {
+    font: inherit;
+  }
+  
+  /* Remove all animations, transitions and smooth scroll for people that prefer not to see them */
+  @media (prefers-reduced-motion: reduce) {
+    html:focus-within {
+      scroll-behavior: auto;
+    }
+  
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+  
+  /* remove all button styles */
+  button {
+    all: unset;
+    cursor: pointer;
+  }
 
 body{
+    font-family: 'Roboto', sans-serif;
     background-color: #333;
     height: 100vh;
     display: flex;
@@ -17,11 +77,115 @@ main{
 .container{
     max-width: 1024px;
     margin: 0 auto;
-    padding: 4rem;
+    padding: 0.5rem;
 }
 
 .sticky-container{
+    position: relative;
     background-color: white ;
     min-height: 550px;
-    border-radius: 10px;
+    border-radius: 20px;
+}
+
+.sticky-header{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    background-color: var(--light-gray);
+    padding: 1rem 2rem;
+    border-bottom: 1px var(--gray) solid;
+    border-radius: 20px 20px 0px 0px;
+}
+.sticky-header h1{
+    font-size: 1.2rem;
+    order: 1;
+}
+
+.sticky-header i{
+    font-size: 1.4rem;
+}
+
+.sticky-header .add-note{
+    color: var(--light-gray);
+    width: 40px;
+    height: 40px;
+    background-color: var(--black);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    order: 3
+    
+}
+
+.sticky-header .add-note:hover{
+    animation: 1s cubic-bezier(0.08,1.67,0.75,1.2) spin;
+}
+
+.sticky-header .sticky-color-pallet{
+    display: flex;
+    gap: .6rem;
+    justify-self: center;
+    order: 2;
+}
+
+.sticky-header .sticky-color-pallet .sticky-color{
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+    transition: all .3s;
+}
+
+.sticky-header .sticky-color-pallet .sticky-color:nth-child(1){
+    background-color: var(--orange);
+}
+.sticky-header .sticky-color-pallet .sticky-color:nth-child(2){
+    background-color: var(--red);
+}
+.sticky-header .sticky-color-pallet .sticky-color:nth-child(3){
+    background-color: var(--purple);
+}
+.sticky-header .sticky-color-pallet .sticky-color:nth-child(4){
+    background-color: var(--blue);
+}
+.sticky-header .sticky-color-pallet .sticky-color:nth-child(5){
+    background-color: var(--green);
+}
+
+.sticky-header .sticky-color-pallet .sticky-color:hover{
+    transform: scale(1.4);
+}
+
+@keyframes spin{
+    from{
+        transform: rotate(0deg);
+    }
+    to{
+        transform: rotate(360deg);
+    }
+}
+
+@media (min-width: 600px){
+   .sticky-header{
+    position: absolute;
+    top:0;
+    bottom: 0;
+    left: 0;
+    width: 100px;
+    border-right: 1px var(--gray) solid;
+    border-bottom: 0px;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 2rem;
+    padding: 2rem 1rem;
+    border-radius: 20px 0px 0px 20px;
+   }
+
+   .sticky-header .sticky-color-pallet {
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
+   }
 }
