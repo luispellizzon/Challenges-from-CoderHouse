@@ -2,11 +2,11 @@
 :root {
   --light-gray: #f1f3f8;
   --gray: #bec5d7;
-  --green: #c6d947;
-  --red: #f3542a;
-  --orange: #f5972c;
-  --purple: #7049f0;
-  --blue: #0aa4f6;
+  --green: #c6d947af;
+  --red: #f3562ab7;
+  --orange: #f5972cc2;
+  --purple: #7049f0a4;
+  --blue: #0aa3f69a;
   --black: #31291d;
 }
 * {
@@ -200,8 +200,7 @@ main {
 }
 
 .sticky-notes-card h3 {
-  margin-bottom: 0.5rem;
-  padding: .5rem .5rem;
+  padding: .5rem .5rem .2rem .5rem;
 }
 .notes-paragraph {
   font-size: 1rem;
