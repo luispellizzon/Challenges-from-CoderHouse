@@ -1,4 +1,4 @@
-/* -- Local Storage --*/
+/* -- Storage --*/
 const Storage = (() =>{
 
     const state = {
