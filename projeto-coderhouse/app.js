@@ -21,10 +21,23 @@ const Storage = (() =>{
 
 /* -- UI --*/
 const UICtrl = (()=>{
+    const UISelectors = {
+        noteContainer: 'sticky-container',
+        addNewNote: 'add-note',
+        editNote : '.edit-card',
+        noteText: '.notes-paragraph',
+        newNote: 'sticky-notes-card',
+        colors: '.sticky-color'
+    }
+
     return {
         addCardtoUi(note){
             console.log(note);
-            console.log("Item added to ui")
+            
+        },
+
+        getSelectors(){
+            return UISelectors;
         }
     }
 })();
@@ -45,8 +58,7 @@ const NotesCtrl = (() =>{
 
     return {
         newNote(){
-            const noteTitle = prompt("Add a new title to your note reminder");
-            const noteText = prompt("Note reminder:");
+          
             const noteID = 1;
             newItem = new Note(noteID, noteTitle, noteText)
             return newItem;
@@ -56,21 +68,36 @@ const NotesCtrl = (() =>{
 
 /* -- App --*/
 const App = ((NotesCtrl, UICtrl, Storage)=>{
+
+    const UISelectors = UICtrl.getSelectors();
+    
+    const loadEvents = () =>{
+        const colorsBtns = document.querySelectorAll(UISelectors.colors)
+        colorsBtns.forEach(colorBtn=> colorBtn.addEventListener('click', getColor))
+
+        document.getElementById()
+
+    }
+
+    const getColor = (e) => {
+        const colorSelectedByUser = e.target.dataset.color
+        return colorSelected;
+    }
+
+    const addNote = () =>{
+
+    }
+
     return {
         init(){
             console.log("App is running")
             Storage.getStorage();
-        },
 
-        itemAdd(){
-            const newNote = NotesCtrl.newNote();
-            UICtrl.addCardtoUi(newNote)
-            Storage.storeItem(newNote);
-        }
+            loadEvents();
+        },
+        
     }
-})(NotesCtrl, UICtrl, Storage)
+})(NotesCtrl, UICtrl, Storage);
+
 
 App.init();
-App.itemAdd();
-App.itemAdd();
-
