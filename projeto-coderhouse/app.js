@@ -45,10 +45,12 @@ const UICtrl = (()=>{
 /* -- New Notes --*/
 const NotesCtrl = (() =>{
 
-    const Note = function(id, title, text){
+    const Note = function(args){
+        const {id, title, text, color} = args;
         this.id = id;
         this.title = title;
         this.text = text;
+        this.color = color;
     }
 
     const state = {
@@ -57,11 +59,8 @@ const NotesCtrl = (() =>{
     }
 
     return {
-        newNote(){
-          
-            const noteID = 1;
-            newItem = new Note(noteID, noteTitle, noteText)
-            return newItem;
+        newNote(notesDetails){
+          return new Note(notesDetails)
         }
     }
 })();
@@ -70,22 +69,39 @@ const NotesCtrl = (() =>{
 const App = ((NotesCtrl, UICtrl, Storage)=>{
 
     const UISelectors = UICtrl.getSelectors();
+
+    const state = {
+        noteColor: ''
+    }
     
     const loadEvents = () =>{
-        const colorsBtns = document.querySelectorAll(UISelectors.colors)
-        colorsBtns.forEach(colorBtn=> colorBtn.addEventListener('click', getColor))
+        
+        document.querySelectorAll(UISelectors.colors)
+        .forEach(colorBtn=> colorBtn.addEventListener('click', getColor))
+        
 
-        document.getElementById()
+
+        document
+        .getElementById(UISelectors.addNewNote)
+        .addEventListener('click', submitNote)
+        
 
     }
 
     const getColor = (e) => {
         const colorSelectedByUser = e.target.dataset.color
-        return colorSelected;
+        state.noteColor = colorSelectedByUser
     }
+    
+    const submitNote = () =>{
+        const newNote = NotesCtrl.newNote({
+            id: 1,
+            title: "",
+            text: "",
+            color: state.noteColor,
+        })
 
-    const addNote = () =>{
-
+        UICtrl.addNote(newNote);
     }
 
     return {
