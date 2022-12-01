@@ -119,11 +119,9 @@ main {
   order: 3;
 }
 
-.sticky-header .add-note:active{
-  transform: scale(.95);
-}
-.sticky-header .add-note:hover {
-  animation: 1s cubic-bezier(0.08, 1.67, 0.75, 1.2) spin;
+
+.sticky-header .add-note.animate {
+  animation: 1s cubic-bezier(0.08, 1.67, 0.75, 1.2) spin ;
 }
 
 
@@ -260,27 +258,7 @@ main {
   transform: scale(.9);
 }
 
-.sticky-notes-card:nth-child(1){
-  background-color: var(--orange);
-}
-.sticky-notes-card:nth-child(2){
-  background-color: var(--red);
-}
-.sticky-notes-card:nth-child(3){
-  background-color: var(--purple);
-}
-.sticky-notes-card:nth-child(4){
-  background-color: var(--blue);
-}
-.sticky-notes-card:nth-child(5){
-  background-color: var(--green);
-}
-.sticky-notes-card:nth-child(6){
-  background-color: var(--purple);
-}
-.sticky-notes-card:nth-child(7){
-  background-color: var(--orange);
-}
+
 @media (min-width: 600px) {
   .sticky-header {
     position: absolute;

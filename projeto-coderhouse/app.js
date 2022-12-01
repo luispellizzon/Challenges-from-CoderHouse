@@ -22,18 +22,51 @@ const Storage = (() =>{
 /* -- UI --*/
 const UICtrl = (()=>{
     const UISelectors = {
-        noteContainer: 'sticky-container',
-        addNewNote: 'add-note',
-        editNote : '.edit-card',
-        noteText: '.notes-paragraph',
-        newNote: 'sticky-notes-card',
+        notesContainer: 'notes-container',
+        addNewNoteBtn: 'add-note',
+        editNoteBtn : '.edit-card',
+        // noteText: '.notes-paragraph',
+        notesDiv: 'sticky-notes-card',
         colors: '.sticky-color'
     }
 
     return {
-        addCardtoUi(note){
-            console.log(note);
+        animate(event){
+            let target;
+            if(event.target.classList.contains('add-note')){
+                target = event.target
+                target.classList.add('animate')
+            } else {
+                target = event.target.parentElement
+                target.classList.add('animate')
+            }
+
+            setTimeout(() =>{
+                target.classList.remove('animate')
+            }, 1000)
+        },
+        addNewNote(note){
+            const {id, title, text, color} = note;
+
+            const container = document.getElementById(UISelectors.notesContainer)
+            const div = document.createElement('div');
+            div.classList.add(UISelectors.notesDiv)
+            div.id = id;
+            div.style.backgroundColor = color;
+
+            div.innerHTML = `
+            <h3>${note.title}</h3>
+                <div class="notes-paragraph">
+                  <p>
+                    ${text}
+                  </p>
+                </div>
+                <button class="edit-card">
+                  <i class="fa-solid fa-pen"></i>
+                </button>
+            `
             
+            container.appendChild(div)
         },
 
         getSelectors(){
@@ -82,7 +115,7 @@ const App = ((NotesCtrl, UICtrl, Storage)=>{
 
 
         document
-        .getElementById(UISelectors.addNewNote)
+        .getElementById(UISelectors.addNewNoteBtn)
         .addEventListener('click', submitNote)
         
 
@@ -93,15 +126,15 @@ const App = ((NotesCtrl, UICtrl, Storage)=>{
         state.noteColor = colorSelectedByUser
     }
     
-    const submitNote = () =>{
+    const submitNote = (e) =>{
         const newNote = NotesCtrl.newNote({
             id: 1,
-            title: "",
-            text: "",
+            title: "Note title",
+            text: "New Sticky Note..",
             color: state.noteColor,
         })
-
-        UICtrl.addNote(newNote);
+        UICtrl.animate(e);
+        UICtrl.addNewNote(newNote);
     }
 
     return {
