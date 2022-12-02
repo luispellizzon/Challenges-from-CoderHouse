@@ -56,10 +56,10 @@ const UICtrl = (()=>{
 
             div.innerHTML = `
                 <div class="notes-title"> 
-                    <textarea id="note-title">${note.title}</textarea>
+                    <textarea id="note-title" placeholder='${note.title}'></textarea>
                 </div>
                 <div class="notes-paragraph">
-                  <textarea id="note-text">${text}</textarea>                  
+                  <textarea id="note-text" placeholder='${text}'></textarea>                  
                 </div>
                 <button class="edit-card">
                   <i class="fa-solid fa-pen"></i>
@@ -129,7 +129,7 @@ const App = ((NotesCtrl, UICtrl, Storage)=>{
     const submitNote = (e) =>{
         const newNote = NotesCtrl.newNote({
             id: 1,
-            title: "Note title",
+            title: "Note title..",
             text: "New Note..",
             color: state.noteColor,
         })
