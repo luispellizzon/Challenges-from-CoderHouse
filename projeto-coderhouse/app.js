@@ -57,7 +57,23 @@ const UICtrl = (()=>{
         addNewNote(note){
             const {id, title, text, color} = note;
             if(color == ''){
-                console.log("please, select a color for your note")
+                Toastify({
+                    text: "❗Please, select a color❗",
+                    duration: 3000,
+                    destination: "https://github.com/apvarun/toastify-js",
+                    newWindow: false,
+                    close: true,
+                    gravity: "bottom", // `top` or `bottom`
+                    position: "center", // `left`, `center` or `right`
+                    stopOnFocus: true, // Prevents dismissing of toast on hover
+                    style: {
+                      background: "#333",
+                      color: '#fff',
+                      borderRadius: '20px'
+                      
+                    },
+                    onClick: function(){} // Callback after click
+                  }).showToast();
                 return;
             }
             const container = document.getElementById(UISelectors.notesContainer)
