@@ -55,18 +55,18 @@ const UICtrl = (()=>{
             div.style.backgroundColor = color;
 
             div.innerHTML = `
-            <h3>${note.title}</h3>
+                <div class="notes-title"> 
+                    <textarea id="note-title">${note.title}</textarea>
+                </div>
                 <div class="notes-paragraph">
-                  <p>
-                    ${text}
-                  </p>
+                  <textarea id="note-text">${text}</textarea>                  
                 </div>
                 <button class="edit-card">
                   <i class="fa-solid fa-pen"></i>
                 </button>
             `
             
-            container.appendChild(div)
+            container.prepend(div)
         },
 
         getSelectors(){
@@ -130,7 +130,7 @@ const App = ((NotesCtrl, UICtrl, Storage)=>{
         const newNote = NotesCtrl.newNote({
             id: 1,
             title: "Note title",
-            text: "New Sticky Note..",
+            text: "New Note..",
             color: state.noteColor,
         })
         UICtrl.animate(e);
