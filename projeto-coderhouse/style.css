@@ -164,7 +164,9 @@ main {
 .sticky-header .sticky-color-pallet .sticky-color:hover {
   transform: scale(1.4);
 }
-
+.sticky-header .sticky-color-pallet .sticky-color.selected{
+  transform: scale(1.4);
+}
 @keyframes spin {
   from {
     transform: rotate(0deg);

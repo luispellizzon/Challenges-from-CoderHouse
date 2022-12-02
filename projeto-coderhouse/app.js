@@ -45,9 +45,21 @@ const UICtrl = (()=>{
                 target.classList.remove('animate')
             }, 1000)
         },
+        selectColor(event,colorSelected,{noteColor}){
+            if(noteColor != colorSelected){
+                const prev = document.querySelector(`[data-color='${noteColor}']`)
+                if(prev?.classList.contains('selected')){
+                    prev.classList.remove('selected')
+                }
+                event.target.classList.add('selected')
+            }
+        },
         addNewNote(note){
             const {id, title, text, color} = note;
-
+            if(color == ''){
+                console.log("please, select a color for your note")
+                return;
+            }
             const container = document.getElementById(UISelectors.notesContainer)
             const div = document.createElement('div');
             div.classList.add(UISelectors.notesDiv)
@@ -123,6 +135,7 @@ const App = ((NotesCtrl, UICtrl, Storage)=>{
 
     const getColor = (e) => {
         const colorSelectedByUser = e.target.dataset.color
+        UICtrl.selectColor(e, colorSelectedByUser, state)
         state.noteColor = colorSelectedByUser
     }
     
