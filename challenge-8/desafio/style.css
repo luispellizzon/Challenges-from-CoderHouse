@@ -31,13 +31,13 @@ body{
 
 
 .container{
+    max-width: 1100px;
     margin: 0 auto;
-    display: flex;
-    justify-content: center;
-    margin-top: 1rem;
 }
 
-.post-container{
+.post-container{ 
+    margin:0 auto;
+    margin-top: 2rem;
     width: 500px;
     background-color: #6667AB;
     border-radius: 10px;
@@ -89,6 +89,9 @@ input[type="submit"]{
     background-color:  #223a5e;
     color: aliceblue;
     cursor: pointer;
+    width: 100%;
+    margin-top: 1rem;
+
 }
 
 input[type="submit"]:hover{

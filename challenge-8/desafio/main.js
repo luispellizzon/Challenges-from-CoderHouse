@@ -15,8 +15,19 @@ postForm.addEventListener('submit', submitPost)
 function getDetails(e){
     state[e.target.id] = e.target.value
 }
-function submitPost(e){
-e.preventDefault();
 
-console.log(state)
+
+function submitPost(e){
+    e.preventDefault();
+    const postList = document.getElementById('post-list')
+    const li = document.createElement('li')
+    li.innerHTML =`
+    <h2>${state[postTitle.id]}<h2>
+    <p>${state[postText.id]}<p>
+    `
+    postList.prepend(li)
+    state[postTitle.id] = ''
+    state[postText.id] = ''
+    postTitle.value = ''
+    postText.value = ''
 }
