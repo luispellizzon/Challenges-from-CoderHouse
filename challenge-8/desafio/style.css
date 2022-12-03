@@ -27,6 +27,8 @@ body{
     font-family: "Nerko One", sans-serif;
     background-color: #333;
     color: white; 
+    height: 100%;
+    width: 100%;
 }
 
 
@@ -36,9 +38,9 @@ body{
 }
 
 .post-container{ 
-    margin:0 auto;
+    margin: 0 auto;
     margin-top: 2rem;
-    width: 500px;
+    max-width: 500px;
     background-color: #6667AB;
     border-radius: 10px;
     padding: 1rem;
@@ -101,3 +103,46 @@ input[type="submit"]:hover{
 input[type="submit"]:active{
     transform:scale(0.99)
 }
+
+.post-list-container{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5rem;
+    list-style-type: none;
+    margin-top: 1rem;
+}
+
+.post{
+    font-family: "Roboto Mono",sans-serif;
+    color: black;
+    display: flex;
+    flex-direction: column;
+    background-color: antiquewhite;
+    min-width: 350px;
+    gap: 1rem;
+    padding: .7rem;
+    border-radius: 5px;
+    animation: fadeIn 1s ease;
+    transition: all 1s ease;
+}
+
+@keyframes fadeIn {
+    0%{
+opacity: 0;
+transform: translateY(-20px);
+    }
+    100%{
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+.post h2{
+    font-size: 1.3rem;
+    background-color: beige;
+    padding: .5rem;
+    text-align: center;
+    border-radius: 5px;
+}
+

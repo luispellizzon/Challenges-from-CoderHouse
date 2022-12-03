@@ -19,12 +19,17 @@ function getDetails(e){
 
 function submitPost(e){
     e.preventDefault();
+    
+    if(state[postTitle.id] == '' || state[postText.id] == ''){
+        console.log("Fill the inputs")
+        return;
+    }
     const postList = document.getElementById('post-list')
     const li = document.createElement('li')
+    li.classList.add('post')
     li.innerHTML =`
-    <h2>${state[postTitle.id]}<h2>
-    <p>${state[postText.id]}<p>
-    `
+    <h2>${state[postTitle.id]}</h2><p>${state[postText.id]}</p>
+    `;
     postList.prepend(li)
     state[postTitle.id] = ''
     state[postText.id] = ''
