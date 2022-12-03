@@ -4,10 +4,22 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="main.js"></script>
+    <script src="main.js" defer></script>
+    <link rel="stylesheet" href="style.css">
     <title>Document</title>
 </head>
 <body>
-    
+    <section>
+        <main class="container">
+            <div class="post-container">
+                <h1>Write a post</h1>
+                <div class="post-body">
+                <input class="post-input" type="text" name="post-title" id="post-title" placeholder="Title...">
+                <textarea name="post-text" id="post-text" placeholder="Write your post.."></textarea>
+                </div>
+                <input type="submit" value="Submit">
+            </div>
+        </main>
+    </section>
 </body>
 </html>
