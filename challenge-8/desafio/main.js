@@ -4,7 +4,8 @@ const postForm = document.getElementById('post-form');
 
 const state = {
     [postTitle.id]: '',
-    [postText.id]: ''
+    [postText.id]: '',
+    posts: [],
 }
 
 const postDetails = [postTitle, postText]
@@ -24,6 +25,7 @@ function submitPost(e){
         console.log("Fill the inputs")
         return;
     }
+    let postId = state.posts.length ? state.posts.length + 1 : 1; 
     const postList = document.getElementById('post-list')
     const li = document.createElement('li')
     li.classList.add('post')
@@ -31,6 +33,16 @@ function submitPost(e){
     <h2>${state[postTitle.id]}</h2><p>${state[postText.id]}</p>
     `;
     postList.prepend(li)
+
+    const newPost = {
+        id: postId,
+        title: state[postTitle.id],
+        text: state[postText.id]
+    }
+
+    state.posts.unshift(newPost)
+
+    console.log(state)
     state[postTitle.id] = ''
     state[postText.id] = ''
     postTitle.value = ''
