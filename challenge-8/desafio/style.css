@@ -83,9 +83,11 @@ input, textarea{
 }
 
 input[type="submit"]{
+    font-family: inherit;
+    letter-spacing: 6px;
     text-transform: uppercase;
     font-weight: bold;
-    font-size: .8rem;
+    font-size: 1rem;
     padding: .5rem;
     border-radius: 10px;
     background-color:  #223a5e;
@@ -115,12 +117,12 @@ input[type="submit"]:active{
 
 .post{
     font-family: "Roboto Mono",sans-serif;
-    color: black;
+    color: #fff;
     display: flex;
     flex-direction: column;
-    background-color: antiquewhite;
+    background-color: rgb(95, 92, 92);
     min-width: 350px;
-    gap: 1rem;
+    gap: .5rem;
     padding: .7rem;
     border-radius: 5px;
     animation: fadeIn 1s ease;
@@ -140,9 +142,16 @@ transform: translateY(-20px);
 
 .post h2{
     font-size: 1.3rem;
-    background-color: beige;
+    background-color: #5f8ed4;
     padding: .5rem;
     text-align: center;
+    border-radius: 5px;
+}
+
+.post div{
+    color: black;
+    background-color: rgba(255, 255, 255, 0.863);
+    padding: .5rem;
     border-radius: 5px;
 }
 
