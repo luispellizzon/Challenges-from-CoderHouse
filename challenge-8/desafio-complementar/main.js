@@ -21,3 +21,14 @@ const friends = [
     },
 ]
 
+const list = document.getElementById('list');
+console.log(list)
+
+friends.map(friend =>{
+    const li = document.createElement('li')
+    li.innerHTML = `
+        <h2>Name:${friend.name}</h2>
+        <p>Phone number:${friend.number}</p> 
+    `
+    list.appendChild(li)
+});
