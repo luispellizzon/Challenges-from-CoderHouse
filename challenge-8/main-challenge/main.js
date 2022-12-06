@@ -50,6 +50,7 @@ function submitPost(e){
     li.innerHTML =`
     <h2>${state[postTitle.id]}</h2>
     <div>${text}</div>
+    <button id="delete" class="delete"><i class="fa fa-trash-o" aria-hidden="true"></i></button>
     `;
 
     /*-- Append post on List --*/
