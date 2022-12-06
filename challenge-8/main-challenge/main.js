@@ -2,6 +2,7 @@ const postTitle = document.getElementById('post-title');
 const postText = document.getElementById('post-text');
 const postForm = document.getElementById('post-form');
 
+
 /*-- Create state to easily manage values --*/
 const state = {
     [postTitle.id]: '',
@@ -50,7 +51,7 @@ function submitPost(e){
     li.innerHTML =`
     <h2>${state[postTitle.id]}</h2>
     <div>${text}</div>
-    <button id="delete" class="delete"><i class="fa fa-trash-o" aria-hidden="true"></i></button>
+    <button id="delete" class="delete"><i class="fa-solid fa-trash-can"></i></button>
     `;
 
     /*-- Append post on List --*/
@@ -66,6 +67,9 @@ function submitPost(e){
     /*-- Add new post on posts array on state --*/
     state.posts.unshift(newPost)
 
+    const deleteBtn = document.getElementById('delete');
+    deleteBtn.addEventListener('click', deletePost)
+
     /* -- Reset all the input values on UI --*/
     state[postTitle.id] = ''
     state[postText.id] = ''
@@ -73,4 +77,8 @@ function submitPost(e){
     postText.value = ''
 
     /*-- END OF FUNCTION--*/
+}
+
+function deletePost(e){
+    console.log(e.target)
 }
