@@ -47,15 +47,6 @@ function submitPost(e){
     /*-- If user post has line breaks, split and make that part of the text a paragraph --*/
     const text = state[postText.id].split('\n').map(p => `<p>${p}</p>`).join(' ')
 
-    /*-- Post Structure --*/
-    li.innerHTML =`
-    <h2>${state[postTitle.id]}</h2>
-    <div>${text}</div>
-    <button id="delete" class="delete"><i class="fa-solid fa-trash-can"></i></button>
-    `;
-
-    /*-- Append post on List --*/
-    postList.prepend(li)
 
     /*-- Create a new post object --*/
     const newPost = {
@@ -63,6 +54,18 @@ function submitPost(e){
         title: state[postTitle.id],
         text
     }
+
+    li.id = newPost.id;
+      /*-- Post Structure --*/
+      li.innerHTML =`
+      <h2>${newPost.title}</h2>
+      <div>${text}</div>
+      <button id="delete" class="delete"><i class="fa-solid fa-trash-can"></i></button>
+      `;
+  
+      /*-- Append post on List --*/
+      postList.prepend(li)
+  
 
     /*-- Add new post on posts array on state --*/
     state.posts.unshift(newPost)
@@ -80,5 +83,16 @@ function submitPost(e){
 }
 
 function deletePost(e){
-    console.log(e.target)
+    if(e.target.id !== 'delete' && e.target.parentNode.id !== 'delete'){
+        return;
+    }
+
+    // const confirmation = confirm("Are you sure you would like to delete this post?")
+
+    // if(!confirmation){
+    //     return;
+    // }
+
+    const filteredPosts = state.posts.filter(post => post.id != e.target.parentNode.parentNode.id)
+    console.log(filteredPosts)
 }
