@@ -4,6 +4,7 @@ const postForm = document.getElementById('post-form');
 const postList = document.getElementById('post-list')
 
 
+
 /*-- Create state to easily manage values --*/
 const state = {
     [postTitle.id]: '',
@@ -55,6 +56,7 @@ function submitPost(e){
         title: state[postTitle.id],
         text
     }
+     /*-- Set to localStorage --*/
 
     li.classList.add('post')
     li.id = newPost.id;
@@ -71,9 +73,10 @@ function submitPost(e){
     /*-- Add new post on posts array on state --*/
     state.posts.unshift(newPost)
 
-    
+   
     li.addEventListener('click', deletePost)
 
+    localStorage.setItem('posts', JSON.stringify(state.posts))
     /* -- Reset all the input values on UI --*/
     state[postTitle.id] = ''
     state[postText.id] = ''
@@ -98,13 +101,11 @@ function deletePost(e){
     }
 }
 
+
 function displayPosts(e){
-/*-- Create li tag and add post class --*/
-
-    const posts = localStorage.getItem('posts') || []
-    state.posts = posts;
-   
-
+    const userPosts = JSON.parse(localStorage.getItem('posts')) ?? []
+    state.posts = userPosts
+    
     state.posts.map(post =>{
         const li = document.createElement('li')
         li.classList.add('post')
@@ -119,5 +120,8 @@ function displayPosts(e){
     postList.prepend(li)
     li.addEventListener('click', deletePost)
     })
-    
+
+    console.log(state.posts)
 }
+
+console.log(JSON.parse(localStorage.getItem('posts')))
