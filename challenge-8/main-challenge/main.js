@@ -4,20 +4,11 @@ const postForm = document.getElementById('post-form');
 const postList = document.getElementById('post-list')
 
 
-
 /*-- Create state to easily manage values --*/
 const state = {
     [postTitle.id]: '',
     [postText.id]: '',
-    posts: [{
-        id: 1,
-        title: 'hello',
-        text: 'hello,'
-    }, {
-        id: 2,
-        title: 'hello',
-        text: 'hello,'
-    }],
+    posts: []
 }
 
 /* -- Get inputs and add an event listener on both to get the user values--*/
@@ -109,6 +100,10 @@ function deletePost(e){
 
 function displayPosts(e){
 /*-- Create li tag and add post class --*/
+
+    const posts = localStorage.getItem('posts') || []
+    state.posts = posts;
+   
 
     state.posts.map(post =>{
         const li = document.createElement('li')
