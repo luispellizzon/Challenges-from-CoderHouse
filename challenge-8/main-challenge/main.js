@@ -44,19 +44,15 @@ function submitPost(e){
     /*-- Create a basic id for each post --*/
     let postId = state.posts.length ? state.posts.length + 1 : 1; 
 
-   
-
-    /*-- If user post has line breaks, split and make that part of the text a paragraph --*/
-    const text = state[postText.id].split('\n').map(p => `<p>${p}</p>`).join(' ')
-
-
     /*-- Create a new post object --*/
     const newPost = {
         id: postId,
         title: state[postTitle.id],
-        text
+        text: state[postText.id]
     }
-     /*-- Set to localStorage --*/
+
+    /*-- If user post has line breaks, split and make that part of the text a paragraph --*/
+    const text = state[postText.id].split('\n').map(p => `<p>${p}</p>`).join(' ')
 
     li.classList.add('post')
     li.id = newPost.id;
@@ -73,9 +69,10 @@ function submitPost(e){
     /*-- Add new post on posts array on state --*/
     state.posts.unshift(newPost)
 
-   
+   /*-- Add delete post events on post--*/
     li.addEventListener('click', deletePost)
 
+    /*-- Set to localStorage --*/
     localStorage.setItem('posts', JSON.stringify(state.posts))
     /* -- Reset all the input values on UI --*/
     state[postTitle.id] = ''
@@ -87,18 +84,20 @@ function submitPost(e){
 }
 
 function deletePost(e){
-    console.log(e.currentTarget.id)
+    /*-- Event delegation way, so we can easily access the list id when we need to delete--*/
+    
     if(e.target.id === 'delete' || e.target.parentNode.id === 'delete'){
-        const confirmation = confirm("Are you sure you would like to delete this post?")
 
+        const confirmation = confirm("Are you sure you would like to delete this post?")
         if(!confirmation){
             return;
         }
-
         const filteredPosts = state.posts.filter(post => post.id != e.currentTarget.id)
         state.posts = filteredPosts
         postList.removeChild(e.currentTarget)
+        localStorage.setItem('posts', JSON.stringify(filteredPosts))
     }
+
 }
 
 
@@ -110,15 +109,17 @@ function displayPosts(e){
         const li = document.createElement('li')
         li.classList.add('post')
         li.id = post.id;
+        const text = post.text.split('\n').map(p => `<p>${p}</p>`).join(' ')
         /*-- Post Structure --*/
         li.innerHTML =`
         <h2>${post.title}</h2>
-        <div>${post.text}</div>
+        <div>${text}</div>
         <button id="delete" class="delete"><i class="fa-solid fa-trash-can"></i></button>
         `;
+        li.addEventListener('click', deletePost)
         /*-- Append post on List --*/
-    postList.prepend(li)
-    li.addEventListener('click', deletePost)
+        postList.appendChild(li)
+        
     })
 
     console.log(state.posts)
