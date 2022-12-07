@@ -1,13 +1,23 @@
 const postTitle = document.getElementById('post-title');
 const postText = document.getElementById('post-text');
 const postForm = document.getElementById('post-form');
+const postList = document.getElementById('post-list')
+
 
 
 /*-- Create state to easily manage values --*/
 const state = {
     [postTitle.id]: '',
     [postText.id]: '',
-    posts: [],
+    posts: [{
+        id: 1,
+        title: 'hello',
+        text: 'hello,'
+    }, {
+        id: 2,
+        title: 'hello',
+        text: 'hello,'
+    }],
 }
 
 /* -- Get inputs and add an event listener on both to get the user values--*/
@@ -17,6 +27,8 @@ postDetails.forEach(input => input.addEventListener('keyup', getDetails))
 
 /*-- Add submit event on form --*/
 postForm.addEventListener('submit', submitPost)
+
+window.addEventListener('load', displayPosts);
 
 /*-- Functions --*/
 
@@ -34,15 +46,13 @@ function submitPost(e){
         return;
     }
 
+    /*-- Create li tag and add post class --*/
+    const li = document.createElement('li')
+
     /*-- Create a basic id for each post --*/
     let postId = state.posts.length ? state.posts.length + 1 : 1; 
 
-    /*-- Get list where the posts will be appended --*/
-    const postList = document.getElementById('post-list')
-
-    /*-- Create li tag and add post class --*/
-    const li = document.createElement('li')
-    li.classList.add('post')
+   
 
     /*-- If user post has line breaks, split and make that part of the text a paragraph --*/
     const text = state[postText.id].split('\n').map(p => `<p>${p}</p>`).join(' ')
@@ -55,23 +65,23 @@ function submitPost(e){
         text
     }
 
+    li.classList.add('post')
     li.id = newPost.id;
-      /*-- Post Structure --*/
-      li.innerHTML =`
-      <h2>${newPost.title}</h2>
-      <div>${text}</div>
-      <button id="delete" class="delete"><i class="fa-solid fa-trash-can"></i></button>
-      `;
-  
-      /*-- Append post on List --*/
-      postList.prepend(li)
-  
+    /*-- Post Structure --*/
+    li.innerHTML =`
+    <h2>${newPost.title}</h2>
+    <div>${text}</div>
+    <button id="delete" class="delete"><i class="fa-solid fa-trash-can"></i></button>
+    `;
+
+    /*-- Append post on List --*/
+    postList.prepend(li)
 
     /*-- Add new post on posts array on state --*/
     state.posts.unshift(newPost)
 
-    const deleteBtn = document.getElementById('delete');
-    deleteBtn.addEventListener('click', deletePost)
+    
+    li.addEventListener('click', deletePost)
 
     /* -- Reset all the input values on UI --*/
     state[postTitle.id] = ''
@@ -83,16 +93,36 @@ function submitPost(e){
 }
 
 function deletePost(e){
-    if(e.target.id !== 'delete' && e.target.parentNode.id !== 'delete'){
-        return;
+    console.log(e.currentTarget.id)
+    if(e.target.id === 'delete' || e.target.parentNode.id === 'delete'){
+        const confirmation = confirm("Are you sure you would like to delete this post?")
+
+        if(!confirmation){
+            return;
+        }
+
+        const filteredPosts = state.posts.filter(post => post.id != e.currentTarget.id)
+        state.posts = filteredPosts
+        postList.removeChild(e.currentTarget)
     }
+}
 
-    // const confirmation = confirm("Are you sure you would like to delete this post?")
+function displayPosts(e){
+/*-- Create li tag and add post class --*/
 
-    // if(!confirmation){
-    //     return;
-    // }
-
-    const filteredPosts = state.posts.filter(post => post.id != e.target.parentNode.parentNode.id)
-    console.log(filteredPosts)
+    state.posts.map(post =>{
+        const li = document.createElement('li')
+        li.classList.add('post')
+        li.id = post.id;
+        /*-- Post Structure --*/
+        li.innerHTML =`
+        <h2>${post.title}</h2>
+        <div>${post.text}</div>
+        <button id="delete" class="delete"><i class="fa-solid fa-trash-can"></i></button>
+        `;
+        /*-- Append post on List --*/
+    postList.prepend(li)
+    li.addEventListener('click', deletePost)
+    })
+    
 }
