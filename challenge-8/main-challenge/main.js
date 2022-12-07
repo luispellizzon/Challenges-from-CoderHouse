@@ -42,8 +42,8 @@ function submitPost(e){
     const li = document.createElement('li')
 
     /*-- Create a basic id for each post --*/
-    let postId = state.posts.length ? state.posts.length + 1 : 1; 
-
+    let postId = Math.floor(Math.random() * Date.now()); 
+    console.log(postId)
     /*-- Create a new post object --*/
     const newPost = {
         id: postId,
@@ -119,7 +119,6 @@ function displayPosts(e){
         li.addEventListener('click', deletePost)
         /*-- Append post on List --*/
         postList.appendChild(li)
-        
     })
 
     console.log(state.posts)
