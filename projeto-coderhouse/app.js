@@ -1,21 +1,17 @@
 /* -- Storage --*/
 const Storage = (() =>{
 
-    const state = {
-        items:[]
-    }
-
     return{
         getStorage(){
-            
-            state.items = localStorage.getItem(JSON.parse('items'))
-            return state.items;
+           const notes = JSON.parse(localStorage.getItem('notes')) ?? []
+           return notes
         },
 
-        storeNote(note){
-            const {items} = state;
-            items.push(note)
-            localStorage.setItem('notes', JSON.stringify(items))
+        storeNote(note, notesState){
+            const { notes } = notesState;
+            notes.push(note)
+            localStorage.setItem('notes', JSON.stringify(notes))
+            return notes
         },
 
     }
@@ -131,7 +127,15 @@ const NotesCtrl = (() =>{
 
     return {
         newNote(notesDetails){
-          return new Note(notesDetails)
+            return new Note(notesDetails)
+        },
+
+        updateState(newState){
+            state.notes = newState;
+        }, 
+        getState(){
+            console.log(state)
+            return state;
         }
     }
 })();
@@ -173,7 +177,9 @@ const App = ((NotesCtrl, UICtrl, Storage)=>{
         })
         UICtrl.animate(e);
         UICtrl.addNewNote(newNote);
-        Storage.storeNote(newNote)
+        const newState = Storage.storeNote(newNote, NotesCtrl.getState())
+        NotesCtrl.updateState(newState)
+        NotesCtrl.getState()
         state.noteColor = '';
         
     }
@@ -181,7 +187,7 @@ const App = ((NotesCtrl, UICtrl, Storage)=>{
     return {
         init(){
             console.log("App is running")
-            Storage.getStorage();
+            
 
             loadEvents();
         },
