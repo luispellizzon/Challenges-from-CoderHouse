@@ -7,11 +7,10 @@ const Storage = (() =>{
            return notes
         },
 
-        storeNote(note, notesState){
-            const { notes } = notesState;
-            notes.push(note)
-            localStorage.setItem('notes', JSON.stringify(notes))
-            return notes
+        storeNote(note, notesArray){
+            notesArray.push(note)
+            localStorage.setItem('notes', JSON.stringify(notesArray))
+            return notesArray
         },
 
     }
@@ -83,7 +82,7 @@ const UICtrl = (()=>{
 
             div.innerHTML = `
                 <div class="notes-title"> 
-                    <textarea id="note-title" placeholder='${note.title}'></textarea>
+                    <textarea id="note-title" placeholder='${title}'></textarea>
                 </div>
                 <div class="notes-paragraph">
                   <textarea id="note-text" placeholder='${text}'></textarea>                  
@@ -94,8 +93,7 @@ const UICtrl = (()=>{
             `
             
             container.prepend(div)
-
-            this.resetColor(color)
+            return note;
         },
 
         getSelectors(){
@@ -104,7 +102,7 @@ const UICtrl = (()=>{
 
         resetColor(color){
             const colorSelected = document.querySelector(`[data-color='${color}']`)
-            colorSelected.classList.remove('selected')
+            colorSelected?.classList.remove('selected')
         }
     }
 })();
@@ -133,9 +131,9 @@ const NotesCtrl = (() =>{
         updateState(newState){
             state.notes = newState;
         }, 
-        getState(){
-            console.log(state)
-            return state;
+        getNotes(){
+            console.log(state.notes)
+            return state.notes;
         }
     }
 })();
@@ -150,11 +148,9 @@ const App = ((NotesCtrl, UICtrl, Storage)=>{
     }
     
     const loadEvents = () =>{
-        
+        window.addEventListener('load', notesFromLocalStorage)
         document.querySelectorAll(UISelectors.colors)
         .forEach(colorBtn=> colorBtn.addEventListener('click', getColor))
-        
-
 
         document
         .getElementById(UISelectors.addNewNoteBtn)
@@ -169,26 +165,29 @@ const App = ((NotesCtrl, UICtrl, Storage)=>{
     }
     
     const submitNote = (e) =>{
+        let noteId = Math.floor(Math.random() * Date.now()); 
         const newNote = NotesCtrl.newNote({
-            id: 1,
+            id: noteId,
             title: "Note title..",
             text: "New Note..",
             color: state.noteColor,
         })
         UICtrl.animate(e);
-        UICtrl.addNewNote(newNote);
-        const newState = Storage.storeNote(newNote, NotesCtrl.getState())
+        const noteToBeStored = UICtrl.addNewNote(newNote);
+        const newState = Storage.storeNote(newNote, NotesCtrl.getNotes())
         NotesCtrl.updateState(newState)
-        NotesCtrl.getState()
+        NotesCtrl.getNotes()
+        UICtrl.resetColor(state.noteColor)
         state.noteColor = '';
         
     }
 
+    const notesFromLocalStorage = () =>{
+        NotesCtrl.getNotes().forEach(note =>UICtrl.addNewNote(note))
+    }
     return {
         init(){
             console.log("App is running")
-            
-
             loadEvents();
         },
         
