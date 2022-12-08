@@ -3,8 +3,6 @@ const postText = document.getElementById('post-text');
 const postForm = document.getElementById('post-form');
 const postList = document.getElementById('post-list')
 
-
-
 /*-- Create state to easily manage values --*/
 const state = {
     [postTitle.id]: '',
@@ -121,7 +119,6 @@ function displayPosts(e){
         postList.appendChild(li)
     })
 
-    console.log(state.posts)
 }
 
-console.log(JSON.parse(localStorage.getItem('posts')))
+

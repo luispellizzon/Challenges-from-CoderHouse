@@ -53,6 +53,7 @@ const UICtrl = (()=>{
                 }
                 event.target.classList.add('selected')
             }
+            
         },
         addNewNote(note){
             const {id, title, text, color} = note;
@@ -95,10 +96,17 @@ const UICtrl = (()=>{
             `
             
             container.prepend(div)
+
+            this.resetColor(color)
         },
 
         getSelectors(){
             return UISelectors;
+        },
+
+        resetColor(color){
+            const colorSelected = document.querySelector(`[data-color='${color}']`)
+            colorSelected.classList.remove('selected')
         }
     }
 })();
@@ -145,7 +153,6 @@ const App = ((NotesCtrl, UICtrl, Storage)=>{
         document
         .getElementById(UISelectors.addNewNoteBtn)
         .addEventListener('click', submitNote)
-        
 
     }
 
@@ -164,6 +171,8 @@ const App = ((NotesCtrl, UICtrl, Storage)=>{
         })
         UICtrl.animate(e);
         UICtrl.addNewNote(newNote);
+        state.noteColor = '';
+        
     }
 
     return {
