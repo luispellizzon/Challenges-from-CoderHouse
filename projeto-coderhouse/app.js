@@ -7,15 +7,17 @@ const Storage = (() =>{
 
     return{
         getStorage(){
+            
+            state.items = localStorage.getItem(JSON.parse('items'))
             return state.items;
         },
 
-        storeItem(note){
+        storeNote(note){
             const {items} = state;
             items.push(note)
-            console.log(items)
-            return items;
-        }
+            localStorage.setItem('notes', JSON.stringify(items))
+        },
+
     }
 })();
 
@@ -171,6 +173,7 @@ const App = ((NotesCtrl, UICtrl, Storage)=>{
         })
         UICtrl.animate(e);
         UICtrl.addNewNote(newNote);
+        Storage.storeNote(newNote)
         state.noteColor = '';
         
     }
