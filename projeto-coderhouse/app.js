@@ -24,7 +24,8 @@ const UICtrl = (()=>{
         editNoteBtn : '.edit-card',
         // noteText: '.notes-paragraph',
         notesDiv: '.sticky-notes-card',
-        colors: '.sticky-color'
+        colors: '.sticky-color',
+        selected: 'selected'
     }
 
     return {
@@ -189,7 +190,8 @@ const App = ((NotesCtrl, UICtrl, Storage)=>{
     }
     
     const editNote = (e) =>{
-        console.log(e.currentTarget)
+        e.currentTarget.classList.add(UISelectors.selected)
+        console.log(e.currentTarget.classList)
     }
 
     const notesFromLocalStorage = () =>{
