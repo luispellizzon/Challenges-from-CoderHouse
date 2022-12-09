@@ -23,7 +23,7 @@ const UICtrl = (()=>{
         addNewNoteBtn: 'add-note',
         editNoteBtn : '.edit-card',
         // noteText: '.notes-paragraph',
-        notesDiv: 'sticky-notes-card',
+        notesDiv: '.sticky-notes-card',
         colors: '.sticky-color'
     }
 
@@ -76,10 +76,9 @@ const UICtrl = (()=>{
             }
             const container = document.getElementById(UISelectors.notesContainer)
             const div = document.createElement('div');
-            div.classList.add(UISelectors.notesDiv)
+            div.classList.add('sticky-notes-card')
             div.id = id;
             div.style.backgroundColor = color;
-
             div.innerHTML = `
                 <div class="notes-title"> 
                     <textarea id="note-title" placeholder='${title}'></textarea>
@@ -103,6 +102,9 @@ const UICtrl = (()=>{
         resetColor(color){
             const colorSelected = document.querySelector(`[data-color='${color}']`)
             colorSelected?.classList.remove('selected')
+        },
+        selectedNote(note){
+            console.log(note)
         }
     }
 })();
@@ -132,8 +134,11 @@ const NotesCtrl = (() =>{
             state.notes = newState;
         }, 
         getNotes(){
-            console.log(state.notes)
+            
             return state.notes;
+        },
+        getState(){
+            return state
         }
     }
 })();
@@ -149,13 +154,14 @@ const App = ((NotesCtrl, UICtrl, Storage)=>{
     
     const loadEvents = () =>{
         window.addEventListener('load', notesFromLocalStorage)
+
         document.querySelectorAll(UISelectors.colors)
         .forEach(colorBtn=> colorBtn.addEventListener('click', getColor))
 
         document
         .getElementById(UISelectors.addNewNoteBtn)
         .addEventListener('click', submitNote)
-
+       
     }
 
     const getColor = (e) => {
@@ -181,14 +187,20 @@ const App = ((NotesCtrl, UICtrl, Storage)=>{
         state.noteColor = '';
         
     }
+    
+    const editNote = (e) =>{
+        console.log(e.currentTarget)
+    }
 
     const notesFromLocalStorage = () =>{
         NotesCtrl.getNotes().forEach(note =>UICtrl.addNewNote(note))
+        document.querySelectorAll(UISelectors.notesDiv).forEach(note => note.addEventListener('click', editNote))
     }
     return {
         init(){
             console.log("App is running")
             loadEvents();
+            
         },
         
     }
