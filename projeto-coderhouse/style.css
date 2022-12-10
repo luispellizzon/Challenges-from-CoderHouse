@@ -188,6 +188,7 @@ main {
   display: flex;
   flex-wrap: wrap;
   gap:5px;
+  padding-top: 1.5rem ;
   padding-bottom: 9rem;
   height: 100%;
   overflow-y: scroll;
@@ -308,9 +309,10 @@ transform: translateY(-100px);
 }
 
 .sticky-notes-card.selected{
--webkit-box-shadow: 0px 0px 35px -1px rgba(108, 111, 111, 1);
--moz-box-shadow: 0px 0px 35px -1px rgba(108, 111, 111, 1);
-box-shadow: 0px 0px 35px -1px rgba(108, 111, 111, 1);
+-webkit-box-shadow: 0px 0px 10px -1px rgba(108, 111, 111, 1);
+-moz-box-shadow: 0px 0px 10px -1px rgba(108, 111, 111, 1);
+box-shadow: 0px 0px 10px -1px rgba(108, 111, 111, 1);
+border: 1px solid rgba(0, 0, 0, 0.514);
 }
 
 @media (min-width: 600px) {
@@ -338,7 +340,6 @@ box-shadow: 0px 0px 35px -1px rgba(108, 111, 111, 1);
 
   .sticky-notes-container, .sticky-container h2 {
     padding-left: 8rem;
-    padding-top: 1.5rem;
     border-radius: 20px 20px 20px 20px;
     padding-bottom: 0rem;
   }
