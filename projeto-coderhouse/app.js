@@ -125,9 +125,13 @@ const UICtrl = (()=>{
             const colorSelected = document.querySelector(`[data-color='${color}']`)
             colorSelected?.classList.remove('selected')
         },
-        selectedNote(note){
-            console.log(note)
-        }
+        selectedNote(noteDiv){
+            if(!noteDiv.classList.contains(UISelectors.selected)){
+                noteDiv.classList.add(UISelectors.selected)
+            }
+            
+        },
+        
     }
 })();
 
@@ -186,8 +190,10 @@ const App = ((NotesCtrl, UICtrl, Storage)=>{
         document
         .getElementById(UISelectors.addNewNoteBtn)
         .addEventListener('click', submitNote)
+
+        document
+        .getElementById(UISelectors.notesContainer).addEventListener('click', selectNote)
        
-        document.getElementById(UISelectors.notesContainer).addEventListener('click', selectNote)
       
     }
 
@@ -215,21 +221,19 @@ const App = ((NotesCtrl, UICtrl, Storage)=>{
     }
     
     const selectNote = (e) =>{
-        console.log(e.currentTarget)
-        UICtrl.noteSelected(note)
+        const noteDiv = e.target.parentElement.parentElement
+        UICtrl.selectedNote(noteDiv)
     }
-    const editNote = (e) =>{
-        
-        console.log('hello')
-    }
+  
     return {
         init(){
             
             const notes = NotesCtrl.getNotes()
 
-            if(notes.length){
+            if(notes.length > 0){
                 UICtrl.populateNotesList(notes)
             }
+
             loadEvents();
             
         },
