@@ -126,6 +126,7 @@ const UICtrl = (()=>{
             colorSelected?.classList.remove('selected')
         },
         selectedNote(noteDiv){
+            
             if(!noteDiv.classList.contains(UISelectors.selected)){
                 noteDiv.classList.add(UISelectors.selected)
             }
@@ -167,7 +168,9 @@ const NotesCtrl = (() =>{
             return state
         },
         editCurrent(note){
-            state.currentNote = note;
+        //    const currentNote = state.notes.find(note => note.id == id)
+        //    state.currentNote = currentNote;
+           console.log(note)
         }
     }
 })();
@@ -178,7 +181,7 @@ const App = ((NotesCtrl, UICtrl, Storage)=>{
     const UISelectors = UICtrl.getSelectors();
 
     const state = {
-        noteColor: ''
+        noteColor: '',
     }
     
     const loadEvents = () =>{
@@ -192,7 +195,7 @@ const App = ((NotesCtrl, UICtrl, Storage)=>{
         .addEventListener('click', submitNote)
 
         document
-        .getElementById(UISelectors.notesContainer).addEventListener('click', selectNote)
+        .querySelectorAll(UISelectors.notesDiv).forEach(note => note.addEventListener('click', editNote))
        
       
     }
@@ -220,13 +223,32 @@ const App = ((NotesCtrl, UICtrl, Storage)=>{
         state.noteColor = '';
     }
     
-    const selectNote = (e) =>{
-        const noteDiv = e.target.parentElement.parentElement
-        UICtrl.selectedNote(noteDiv)
+    const editNote = (e) =>{
+        const id = e.target.parentElement.parentElement.id
+        var title ="";
+        var text = "";
+        // UICtrl.selectedNote(noteDiv)
+        document.getElementById('note-text').addEventListener('change',(e)=>{
+            text = e.target.value;
+            return text
+        })
+        document.getElementById('note-title').addEventListener('change',(e)=>{
+        title = e.target.value
+        })
+
+        if(e.target.classList.contains('edit-card') || e.target.parentElement.classList.contains('edit-card') ){
+            const noteSelected = {
+                id,
+               title,
+               text,
+            }
+            NotesCtrl.editCurrent(noteSelected)
+        }
+        
     }
   
     return {
-        init(){
+        async init(){
             
             const notes = NotesCtrl.getNotes()
 
