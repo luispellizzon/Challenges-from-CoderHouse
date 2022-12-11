@@ -12,6 +12,9 @@ const Storage = (() =>{
             localStorage.setItem('notes', JSON.stringify(notesArray))
             return notesArray
         },
+        setNotes(notes){
+            localStorage.setItem('notes', JSON.stringify(notes))
+        }
 
     }
 })();
@@ -169,12 +172,19 @@ const NotesCtrl = (() =>{
         },
         editCurrent(editNote){
             state.currentNote = editNote
+            console.log(state.currentNote)
             const currentId = parseInt(editNote.id)
             const found = state.notes.find(note => note.id === currentId)
-            found.title = state.currentNote.title
-            found.text = state.currentNote.text
-            
-          console.log(state.notes.map(note => note.id).indexOf(currentId))
+            if(state.currentNote.title !== ""){
+                found.title = state.currentNote.title
+            }
+            if(state.currentNote.text !== ""){
+                found.text = state.currentNote.text
+            }
+          const noteIndex = state.notes.map(note => note.id).indexOf(currentId)
+          state.notes.splice(noteIndex, 1, found)
+          
+          return state.notes
         }
     }
 })();
@@ -186,7 +196,11 @@ const App = ((NotesCtrl, UICtrl, Storage)=>{
 
     const state = {
         noteColor: '',
-        noteSelected:{}
+        noteSelected:{
+            id:"",
+            title: "",
+            text: "",
+        }
     }
     
     const loadEvents = () =>{
@@ -225,6 +239,7 @@ const App = ((NotesCtrl, UICtrl, Storage)=>{
         NotesCtrl.updateState(newState)
         NotesCtrl.getNotes()
         UICtrl.resetColor(state.noteColor)
+        document.querySelector(UISelectors.notesDiv).addEventListener('click', editNote)
         state.noteColor = '';
     }
     
@@ -240,7 +255,8 @@ const App = ((NotesCtrl, UICtrl, Storage)=>{
         });
         
         if(e.target.classList.contains('edit-card') || e.target.parentElement.classList.contains('edit-card') ){
-            NotesCtrl.editCurrent(noteSelected)
+            const noteEditedAddedOnArray = NotesCtrl.editCurrent(noteSelected)
+            Storage.setNotes(noteEditedAddedOnArray)
         }
         
     }
