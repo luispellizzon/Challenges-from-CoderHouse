@@ -167,10 +167,14 @@ const NotesCtrl = (() =>{
         getState(){
             return state
         },
-        editCurrent(note){
-        //    const currentNote = state.notes.find(note => note.id == id)
-        //    state.currentNote = currentNote;
-           console.log(note)
+        editCurrent(editNote){
+            state.currentNote = editNote
+            const currentId = parseInt(editNote.id)
+            const found = state.notes.find(note => note.id === currentId)
+            found.title = state.currentNote.title
+            found.text = state.currentNote.text
+            
+          console.log(state.notes.map(note => note.id).indexOf(currentId))
         }
     }
 })();
@@ -182,6 +186,7 @@ const App = ((NotesCtrl, UICtrl, Storage)=>{
 
     const state = {
         noteColor: '',
+        noteSelected:{}
     }
     
     const loadEvents = () =>{
@@ -224,24 +229,17 @@ const App = ((NotesCtrl, UICtrl, Storage)=>{
     }
     
     const editNote = (e) =>{
-        const id = e.target.parentElement.parentElement.id
-        var title ="";
-        var text = "";
-        // UICtrl.selectedNote(noteDiv)
-        document.getElementById('note-text').addEventListener('change',(e)=>{
-            text = e.target.value;
-            return text
-        })
-        document.getElementById('note-title').addEventListener('change',(e)=>{
-        title = e.target.value
-        })
+        const {noteSelected} = state;
+        noteSelected.id = e.currentTarget.id
 
+        document.getElementById('note-title').addEventListener('keyup', (e)=>{
+            noteSelected.title = e.target.value
+        });
+        document.getElementById('note-text').addEventListener('keyup', (e)=>{
+            noteSelected.text = e.target.value
+        });
+        
         if(e.target.classList.contains('edit-card') || e.target.parentElement.classList.contains('edit-card') ){
-            const noteSelected = {
-                id,
-               title,
-               text,
-            }
             NotesCtrl.editCurrent(noteSelected)
         }
         
