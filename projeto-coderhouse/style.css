@@ -13,3 +13,18 @@ body{
     color: var(--text-color);
     background-color: var(--bg-color);
 }
+
+.container{
+  margin: 0 auto;
+  max-width: 1024px;
+  background: white;
+}
+
+.flex{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.calculadora{
+}
