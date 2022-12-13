@@ -17,13 +17,21 @@ body{
 .container{
   margin: 0 auto;
   max-width: 1024px;
-  background: white;
+  
+}
+
+.nav-container{
+  
 }
 
 .flex{
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+.flex-col{
+  flex-direction: column;
 }
 
 .calculadora{
