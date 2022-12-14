@@ -48,7 +48,8 @@ const UICtrl = (()=>{
         },
          populateNotesList(notes){
             let htmlList = "";
-            notes.forEach((note) => {
+            
+            notes.reverse().forEach((note) => {
                 const {id, title, text, color} = note;
             htmlList +=  `
                 <div class="sticky-notes-card" id="${id}" style="background-color: ${color}">
@@ -246,6 +247,7 @@ const App = ((NotesCtrl, UICtrl, Storage)=>{
     const editNote = (e) =>{
         const {noteSelected} = state;
         noteSelected.id = e.currentTarget.id
+        
 
         document.getElementById('note-title').addEventListener('keyup', (e)=>{
             noteSelected.title = e.target.value
