@@ -161,7 +161,7 @@ const NotesCtrl = (() =>{
             return new Note(notesDetails)
         },
 
-        updateState(newState){
+        updateNotesArray(newState){
             state.notes = newState;
         }, 
         getNotes(){
@@ -184,7 +184,7 @@ const NotesCtrl = (() =>{
             }
           const noteIndex = state.notes.map(note => note.id).indexOf(currentId)
           state.notes.splice(noteIndex, 1, found)
-          
+          console.log(state.notes)
           return state.notes
         }
     }
@@ -227,6 +227,7 @@ const App = ((NotesCtrl, UICtrl, Storage)=>{
     }
     
     const submitNote = (e) =>{
+        
         let noteId = Math.floor(Math.random() * Date.now()); 
         const newNote = NotesCtrl.newNote({
             id: noteId,
@@ -236,19 +237,22 @@ const App = ((NotesCtrl, UICtrl, Storage)=>{
         })
         UICtrl.animate(e);
         const noteToBeStored = UICtrl.addNewNote(newNote);
+        if(!noteToBeStored){
+            return;
+        } 
         const newState = Storage.storeNote(newNote, NotesCtrl.getNotes())
-        NotesCtrl.updateState(newState)
+        NotesCtrl.updateNotesArray(newState)
         NotesCtrl.getNotes()
         UICtrl.resetColor(state.noteColor)
         document.querySelector(UISelectors.notesDiv).addEventListener('click', editNote)
         state.noteColor = '';
+        
     }
     
     const editNote = (e) =>{
-        const {noteSelected} = state;
+        const {noteSelected} = state
         noteSelected.id = e.currentTarget.id
         
-
         document.getElementById('note-title').addEventListener('keyup', (e)=>{
             noteSelected.title = e.target.value
         });
