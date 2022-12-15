@@ -239,9 +239,14 @@ const App = ((NotesCtrl, UICtrl, Storage)=>{
         UICtrl.selectColor(e, colorSelectedByUser, state)
         state.noteColor = colorSelectedByUser
     }
+    const addEventsAtSubmit = () =>{
+        // document.querySelector(UISelectors.notesDiv).addEventListener('click', editNote)
+        document.getElementById(UISelectors.editNoteBtn).addEventListener('click', editNote)
+        document.getElementById(UISelectors.noteTitle).addEventListener('keyup', getDetails)
+        document.getElementById(UISelectors.noteText).addEventListener('keyup', getDetails)
+    }
     
     const submitNote = (e) =>{
-        
         let noteId = Math.floor(Math.random() * Date.now()); 
         const newNote = NotesCtrl.newNote({
             id: noteId,
@@ -254,17 +259,23 @@ const App = ((NotesCtrl, UICtrl, Storage)=>{
         if(!noteToBeStored){
             return;
         } 
+
+        addEventsAtSubmit();
+
+        //Storing
         const newState = Storage.storeNote(newNote, NotesCtrl.getNotes())
         NotesCtrl.updateNotesArray(newState)
         NotesCtrl.getNotes()
+        
+
+        //Reseting State and UI
         UICtrl.resetColor(state.noteColor)
-        // document.querySelector(UISelectors.notesDiv).addEventListener('click', editNote)
-        document.getElementById(UISelectors.editNoteBtn).addEventListener('click', editNote)
-        document.getElementById(UISelectors.noteTitle).addEventListener('keyup', getDetails)
-        document.getElementById(UISelectors.noteText).addEventListener('keyup', getDetails)
+        
         state.noteColor = '';
         
     }
+
+   
     
     const getDetails = (e) =>{
         const { noteSelected } = state
