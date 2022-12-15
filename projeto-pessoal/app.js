@@ -26,7 +26,7 @@ const UICtrl = (()=>{
         noteTitle: 'note-title',
         noteText: 'note-text',
         addNewNoteBtn: 'add-note',
-        editNoteBtn : '.edit-card',
+        editNoteBtn : 'edit-btn',
         // noteText: '.notes-paragraph',
         notesDiv: '.sticky-notes-card',
         colors: '.sticky-color',
@@ -61,8 +61,8 @@ const UICtrl = (()=>{
                     <div class="notes-paragraph">
                     <textarea id="note-text" placeholder='${text}'></textarea>                  
                     </div>
-                    <button class="edit-card">
-                    <i class="fa-solid fa-pen"></i>
+                    <button class="edit-card" id="edit-btn">
+                        <i class="fa-solid fa-pen"></i>
                     </button>
                 </div>
         `
@@ -114,7 +114,7 @@ const UICtrl = (()=>{
                 <div class="notes-paragraph">
                   <textarea id="note-text" placeholder='${text}'></textarea>                  
                 </div>
-                <button class="edit-card">
+                <button class="edit-card" id="edit-btn">
                   <i class="fa-solid fa-pen"></i>
                 </button>
             `
@@ -188,7 +188,6 @@ const NotesCtrl = (() =>{
             }
           const noteIndex = state.notes.map(note => note.id).indexOf(currentId)
           state.notes.splice(noteIndex, 1, found)
-          console.log(state.notes)
           return state.notes
         }
     }
@@ -201,11 +200,7 @@ const App = ((NotesCtrl, UICtrl, Storage)=>{
 
     const state = {
         noteColor: '',
-        noteSelected:{
-            id:"",
-            title: "",
-            text: "",
-        }
+        noteSelected:{}
     }
     
     const loadEvents = () =>{
@@ -218,16 +213,20 @@ const App = ((NotesCtrl, UICtrl, Storage)=>{
         .getElementById(UISelectors.addNewNoteBtn)
         .addEventListener('click', submitNote)
 
-        document
-        .querySelectorAll(UISelectors.notesDiv).forEach(note => {
-            note.addEventListener('click', editNote)
-        });
+        document.querySelectorAll("#"+UISelectors.editNoteBtn).forEach(btn =>{
+            btn.addEventListener('click', editNote)
+        })
 
-        document.querySelectorAll(UISelectors.noteTitle).forEach(note =>{
+        // document
+        // .querySelectorAll(UISelectors.notesDiv).forEach(note => {
+        //     note.addEventListener('click', editNote)
+        // });
+
+        document.querySelectorAll("#"+UISelectors.noteTitle).forEach(note =>{
             note.addEventListener('keyup', getDetails)
         })
 
-        document.querySelectorAll(UISelectors.noteText).forEach(note =>{
+        document.querySelectorAll("#"+UISelectors.noteText).forEach(note =>{
             note.addEventListener('keyup', getDetails)
         })
 
@@ -259,26 +258,31 @@ const App = ((NotesCtrl, UICtrl, Storage)=>{
         NotesCtrl.updateNotesArray(newState)
         NotesCtrl.getNotes()
         UICtrl.resetColor(state.noteColor)
-        document.querySelector(UISelectors.notesDiv).addEventListener('click', editNote)
-        document.getElementById('note-title').addEventListener('keyup', getDetails)
-        document.getElementById('note-text').addEventListener('keyup', getDetails)
+        // document.querySelector(UISelectors.notesDiv).addEventListener('click', editNote)
+        document.getElementById(UISelectors.editNoteBtn).addEventListener('click', editNote)
+        document.getElementById(UISelectors.noteTitle).addEventListener('keyup', getDetails)
+        document.getElementById(UISelectors.noteText).addEventListener('keyup', getDetails)
         state.noteColor = '';
         
     }
     
     const getDetails = (e) =>{
-        console.log(e.target.id, e.target.value)
+        const { noteSelected } = state
+        console.log(e.target.id)
+        noteSelected[e.target.id] = e.target.value
+        
     }
     const editNote = (e) =>{
-        const {noteSelected} = state
-        console.log(e.currentTarget)
-        noteSelected.id = e.currentTarget.id
+        console.log(e.currentTarget.parentElement)
+        // const { noteSelected } = state
+        // noteSelected.id = e.currentTarget.id
+        // console.log(noteSelected)
         
         
-        if(e.target.classList.contains('edit-card') || e.target.parentElement.classList.contains('edit-card') ){
-            const noteEditedAddedOnArray = NotesCtrl.editCurrent(noteSelected)
-            Storage.setNotes(noteEditedAddedOnArray)
-        }
+        // if(e.target.classList.contains('edit-card') || e.target.parentElement.classList.contains('edit-card') ){
+        //     const noteEditedAddedOnArray = NotesCtrl.editCurrent(noteSelected)
+        //     Storage.setNotes(noteEditedAddedOnArray)
+        // }
         
     }
   
