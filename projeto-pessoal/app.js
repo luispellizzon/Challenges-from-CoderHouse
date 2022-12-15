@@ -23,6 +23,8 @@ const Storage = (() =>{
 const UICtrl = (()=>{
     const UISelectors = {
         notesContainer: 'notes-container',
+        noteTitle: 'note-title',
+        noteText: 'note-text',
         addNewNoteBtn: 'add-note',
         editNoteBtn : '.edit-card',
         // noteText: '.notes-paragraph',
@@ -156,6 +158,8 @@ const NotesCtrl = (() =>{
         currentNote: null,
     }
 
+    console.log(state.notes)
+
     return {
         newNote(notesDetails){
             return new Note(notesDetails)
@@ -215,8 +219,19 @@ const App = ((NotesCtrl, UICtrl, Storage)=>{
         .addEventListener('click', submitNote)
 
         document
-        .querySelectorAll(UISelectors.notesDiv).forEach(note => note.addEventListener('click', editNote))
-       
+        .querySelectorAll(UISelectors.notesDiv).forEach(note => {
+            note.addEventListener('click', editNote)
+        });
+
+        document.querySelectorAll(UISelectors.noteTitle).forEach(note =>{
+            note.addEventListener('keyup', getDetails)
+        })
+
+        document.querySelectorAll(UISelectors.noteText).forEach(note =>{
+            note.addEventListener('keyup', getDetails)
+        })
+
+      
       
     }
 
@@ -245,20 +260,20 @@ const App = ((NotesCtrl, UICtrl, Storage)=>{
         NotesCtrl.getNotes()
         UICtrl.resetColor(state.noteColor)
         document.querySelector(UISelectors.notesDiv).addEventListener('click', editNote)
+        document.getElementById('note-title').addEventListener('keyup', getDetails)
+        document.getElementById('note-text').addEventListener('keyup', getDetails)
         state.noteColor = '';
         
     }
     
+    const getDetails = (e) =>{
+        console.log(e.target.id, e.target.value)
+    }
     const editNote = (e) =>{
         const {noteSelected} = state
+        console.log(e.currentTarget)
         noteSelected.id = e.currentTarget.id
         
-        document.getElementById('note-title').addEventListener('keyup', (e)=>{
-            noteSelected.title = e.target.value
-        });
-        document.getElementById('note-text').addEventListener('keyup', (e)=>{
-            noteSelected.text = e.target.value
-        });
         
         if(e.target.classList.contains('edit-card') || e.target.parentElement.classList.contains('edit-card') ){
             const noteEditedAddedOnArray = NotesCtrl.editCurrent(noteSelected)
