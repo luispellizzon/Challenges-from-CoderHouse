@@ -123,6 +123,22 @@ const UICtrl = (()=>{
             return note;
         },
 
+        isAble(noteId){
+            const div = document.getElementById(noteId);
+            const titleDiv = [...div.children[0].children][0];
+            const textDiv = [...div.children[1].children][0];
+            titleDiv.disabled = false;
+            textDiv.disabled = false;
+        },
+
+        isNotAble(noteId){
+            const div = document.getElementById(noteId);
+            const titleDiv = [...div.children[0].children][0];
+            const textDiv = [...div.children[1].children][0];
+            titleDiv.disabled = true;
+            textDiv.disabled = true;
+        },
+
         getSelectors(){
             return UISelectors;
         },
@@ -132,7 +148,6 @@ const UICtrl = (()=>{
             colorSelected?.classList.remove('selected')
         },
         selectedNote(noteDiv){
-            
             if(!noteDiv.classList.contains(UISelectors.selected)){
                 noteDiv.classList.add(UISelectors.selected)
             }
@@ -245,7 +260,7 @@ const App = ((NotesCtrl, UICtrl, Storage)=>{
         document.getElementById(UISelectors.noteTitle).addEventListener('keyup', getDetails)
         document.getElementById(UISelectors.noteText).addEventListener('keyup', getDetails)
     }
-    
+
     const submitNote = (e) =>{
         let noteId = Math.floor(Math.random() * Date.now()); 
         const newNote = NotesCtrl.newNote({
@@ -262,6 +277,8 @@ const App = ((NotesCtrl, UICtrl, Storage)=>{
 
         addEventsAtSubmit();
 
+        UICtrl.isNotAble(noteId);
+
         //Storing
         const newState = Storage.storeNote(newNote, NotesCtrl.getNotes())
         NotesCtrl.updateNotesArray(newState)
@@ -274,8 +291,6 @@ const App = ((NotesCtrl, UICtrl, Storage)=>{
         state.noteColor = '';
         
     }
-
-   
     
     const getDetails = (e) =>{
         const { noteSelected } = state
