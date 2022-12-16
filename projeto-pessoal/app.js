@@ -64,6 +64,9 @@ const UICtrl = (()=>{
                     <button class="edit-card" id="edit-btn">
                         <i class="fa-solid fa-pen"></i>
                     </button>
+                    <button class="save-card" id="save-btn">
+                        save
+                    </button>
                 </div>
         `
       });
@@ -117,6 +120,9 @@ const UICtrl = (()=>{
                 <button class="edit-card" id="edit-btn">
                   <i class="fa-solid fa-pen"></i>
                 </button>
+                <button class="save-card" id="save-btn">
+                  save
+                </button>
             `
             
             container.prepend(div)
@@ -127,14 +133,18 @@ const UICtrl = (()=>{
             const div = document.getElementById(noteId);
             const titleDiv = [...div.children[0].children][0];
             const textDiv = [...div.children[1].children][0];
+            const saveBtn = [div.children[3]][0];
+            console.log(saveBtn)
             titleDiv.disabled = false;
             textDiv.disabled = false;
+            saveBtn.classList.add('active')
         },
 
         isNotAble(noteId){
             const div = document.getElementById(noteId);
             const titleDiv = [...div.children[0].children][0];
             const textDiv = [...div.children[1].children][0];
+            const saveBtn = [...div.children[3].children][0];
             titleDiv.disabled = true;
             textDiv.disabled = true;
         },
@@ -275,8 +285,6 @@ const App = ((NotesCtrl, UICtrl, Storage)=>{
         } 
 
         addEventsAtSubmit();
-
-        UICtrl.isNotAble(noteId);
 
         //Storing
         const newState = Storage.storeNote(newNote, NotesCtrl.getNotes())

@@ -299,15 +299,53 @@ transform: translateY(-100px);
   display: flex;
   align-items: center;
   justify-content: center;
+  transition: background-color .2s ease;
 }
 
 .edit-card:hover{
   color: var(--gray);
 }
-.edit-card:active{
-  transform: scale(.9);
+
+.save-card{
+  position: absolute;
+  font-weight: bold;
+  letter-spacing: 1.5px;
+  display: none;
+  font-size: .8rem;
+  color: var(--light-gray);
+  bottom: 5px;
+  left: 5px;
+  border-radius: 5px;
+  background-color: var(--black);
+  padding: .3rem .7rem;
+  transition: background-color, display .2s ease;
 }
 
+.save-card.active{
+  display: block;
+  animation:  1s ease showSaveBtn;
+}
+
+@keyframes showSaveBtn {
+  0%{
+    
+    opacity: 0;
+  }
+
+  100%{
+    opacity: 1;
+  }
+}
+
+.save-card:hover, .edit-card:hover{
+  color: var(--light-gray);
+  background-color: rgb(83, 80, 80)
+
+}
+
+.edit-card:active, .save-card:active{
+  transform: scale(.9);
+}
 .sticky-notes-card.selected{
 -webkit-box-shadow: 0px 0px 10px -1px rgba(108, 111, 111, 1);
 -moz-box-shadow: 0px 0px 10px -1px rgba(108, 111, 111, 1);
