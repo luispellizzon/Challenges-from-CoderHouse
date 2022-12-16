@@ -56,10 +56,10 @@ const UICtrl = (()=>{
             htmlList +=  `
                 <div class="sticky-notes-card" id="${id}" style="background-color: ${color}">
                     <div class="notes-title"> 
-                        <textarea id="note-title" placeholder='${title}'></textarea>
+                        <textarea id="note-title" placeholder='${title}' disabled></textarea>
                     </div>
                     <div class="notes-paragraph">
-                    <textarea id="note-text" placeholder='${text}'></textarea>                  
+                    <textarea id="note-text" placeholder='${text}' disabled></textarea>                  
                     </div>
                     <button class="edit-card" id="edit-btn">
                         <i class="fa-solid fa-pen"></i>
