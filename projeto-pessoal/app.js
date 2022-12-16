@@ -220,7 +220,6 @@ const App = ((NotesCtrl, UICtrl, Storage)=>{
     
     const loadEvents = () =>{
         
-
         document.querySelectorAll(UISelectors.colors)
         .forEach(colorBtn=> colorBtn.addEventListener('click', getColor))
 
@@ -299,7 +298,8 @@ const App = ((NotesCtrl, UICtrl, Storage)=>{
         
     }
     const editNote = (e) =>{
-        console.log(e.currentTarget.parentElement)
+        const noteDiv = e.currentTarget.parentElement.id
+        UICtrl.isAble(noteDiv)
         // const { noteSelected } = state
         // noteSelected.id = e.currentTarget.id
         // console.log(noteSelected)
