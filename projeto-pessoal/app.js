@@ -27,6 +27,7 @@ const UICtrl = (()=>{
         noteText: 'note-text',
         addNewNoteBtn: 'add-note',
         editNoteBtn : 'edit-btn',
+        saveNoteBtn : 'save-btn',
         // noteText: '.notes-paragraph',
         notesDiv: '.sticky-notes-card',
         colors: '.sticky-color',
@@ -147,6 +148,7 @@ const UICtrl = (()=>{
             const saveBtn = [...div.children[3].children][0];
             titleDiv.disabled = true;
             textDiv.disabled = true;
+            saveBtn.classList.remove('active')
         },
 
         getSelectors(){
@@ -241,6 +243,10 @@ const App = ((NotesCtrl, UICtrl, Storage)=>{
             btn.addEventListener('click', editNote)
         })
 
+        document.querySelectorAll("#"+UISelectors.saveNoteBtn).forEach(btn =>{
+            btn.addEventListener('click', saveEditedNote)
+        })
+
         // document
         // .querySelectorAll(UISelectors.notesDiv).forEach(note => {
         //     note.addEventListener('click', editNote)
@@ -318,6 +324,12 @@ const App = ((NotesCtrl, UICtrl, Storage)=>{
         //     Storage.setNotes(noteEditedAddedOnArray)
         // }
         
+    }
+
+    const saveEditedNote =(e)=>{
+        const noteDiv = e.currentTarget.parentElement.id
+        console.log(noteDiv)
+        // UICtrl.isNotAble(noteDiv)
     }
   
     return {
