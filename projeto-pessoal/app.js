@@ -145,7 +145,7 @@ const UICtrl = (()=>{
             const div = document.getElementById(noteId);
             const titleDiv = [...div.children[0].children][0];
             const textDiv = [...div.children[1].children][0];
-            const saveBtn = [...div.children[3].children][0];
+            const saveBtn = [div.children[3]][0];
             titleDiv.disabled = true;
             textDiv.disabled = true;
             saveBtn.classList.remove('active')
@@ -312,8 +312,8 @@ const App = ((NotesCtrl, UICtrl, Storage)=>{
         
     }
     const editNote = (e) =>{
-        const noteDiv = e.currentTarget.parentElement.id
-        UICtrl.isAble(noteDiv)
+        const noteDivId = e.currentTarget.parentElement.id
+        UICtrl.isAble(noteDivId)
         // const { noteSelected } = state
         // noteSelected.id = e.currentTarget.id
         // console.log(noteSelected)
@@ -327,9 +327,9 @@ const App = ((NotesCtrl, UICtrl, Storage)=>{
     }
 
     const saveEditedNote =(e)=>{
-        const noteDiv = e.currentTarget.parentElement.id
-        console.log(noteDiv)
-        // UICtrl.isNotAble(noteDiv)
+        const noteDivId = e.currentTarget.parentElement.id
+        
+        UICtrl.isNotAble(noteDivId)
     }
   
     return {
