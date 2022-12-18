@@ -138,6 +138,7 @@ const UICtrl = (()=>{
             console.log(saveBtn)
             titleDiv.disabled = false;
             textDiv.disabled = false;
+            saveBtn.classList.remove('notActive')
             saveBtn.classList.add('active')
         },
 
@@ -149,6 +150,7 @@ const UICtrl = (()=>{
             titleDiv.disabled = true;
             textDiv.disabled = true;
             saveBtn.classList.remove('active')
+            saveBtn.classList.add('notActive')
         },
 
         getSelectors(){
@@ -247,11 +249,6 @@ const App = ((NotesCtrl, UICtrl, Storage)=>{
             btn.addEventListener('click', saveEditedNote)
         })
 
-        // document
-        // .querySelectorAll(UISelectors.notesDiv).forEach(note => {
-        //     note.addEventListener('click', editNote)
-        // });
-
         document.querySelectorAll("#"+UISelectors.noteTitle).forEach(note =>{
             note.addEventListener('keyup', getDetails)
         })
@@ -328,7 +325,6 @@ const App = ((NotesCtrl, UICtrl, Storage)=>{
 
     const saveEditedNote =(e)=>{
         const noteDivId = e.currentTarget.parentElement.id
-        
         UICtrl.isNotAble(noteDivId)
     }
   

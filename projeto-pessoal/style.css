@@ -310,7 +310,7 @@ transform: translateY(-100px);
   position: absolute;
   font-weight: bold;
   letter-spacing: 1.5px;
-  display: none;
+  visibility: hidden;
   font-size: .8rem;
   color: var(--light-gray);
   bottom: 5px;
@@ -318,22 +318,41 @@ transform: translateY(-100px);
   border-radius: 5px;
   background-color: var(--black);
   padding: .3rem .7rem;
-  transition: background-color, display .2s ease;
+  transition: all .2s ease;
+}
+
+.save-card.notActive{
+  animation: .5s ease fadeOut;
 }
 
 .save-card.active{
-  display: block;
-  animation:  1s ease showSaveBtn;
+  visibility: visible;
+  animation:  .7s ease showSaveBtn;
 }
 
 @keyframes showSaveBtn {
   0%{
-    
     opacity: 0;
+    transform: scale(.7);
   }
 
   100%{
     opacity: 1;
+    transform: scale(1);
+    
+  }
+}
+
+@keyframes fadeOut {
+  0%{
+    opacity: 1;
+    visibility: visible;
+  }
+
+  100%{
+    opacity: 0;
+    visibility: hidden;
+    transform: scale(.7);
   }
 }
 
@@ -346,6 +365,10 @@ transform: translateY(-100px);
 .edit-card:active, .save-card:active{
   transform: scale(.9);
 }
+
+
+
+
 .sticky-notes-card.selected{
 -webkit-box-shadow: 0px 0px 10px -1px rgba(108, 111, 111, 1);
 -moz-box-shadow: 0px 0px 10px -1px rgba(108, 111, 111, 1);
