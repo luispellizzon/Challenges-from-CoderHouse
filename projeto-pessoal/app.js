@@ -269,6 +269,7 @@ const App = ((NotesCtrl, UICtrl, Storage)=>{
     const addEventsAtSubmit = () =>{
         // document.querySelector(UISelectors.notesDiv).addEventListener('click', editNote)
         document.getElementById(UISelectors.editNoteBtn).addEventListener('click', editNote)
+        document.getElementById(UISelectors.saveNoteBtn).addEventListener('click', saveEditedNote)
         document.getElementById(UISelectors.noteTitle).addEventListener('keyup', getDetails)
         document.getElementById(UISelectors.noteText).addEventListener('keyup', getDetails)
     }

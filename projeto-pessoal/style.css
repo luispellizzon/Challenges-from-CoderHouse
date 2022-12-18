@@ -259,6 +259,9 @@ transform: translateY(-100px);
 #note-text::placeholder, #note-title::placeholder {
   color: black;
 }
+#note-text:disabled, #note-title:disabled {
+  color: black;
+}
 #note-title::-webkit-scrollbar, #note-text::-webkit-scrollbar {
   width: 3px;
 }
