@@ -135,7 +135,6 @@ const UICtrl = (()=>{
             const titleDiv = [...div.children[0].children][0];
             const textDiv = [...div.children[1].children][0];
             const saveBtn = [div.children[3]][0];
-            console.log(saveBtn)
             titleDiv.disabled = false;
             textDiv.disabled = false;
             saveBtn.classList.remove('notActive')
@@ -167,6 +166,11 @@ const UICtrl = (()=>{
             }
             
         },
+        displayCurrentNote(noteDivID){
+            console.log(document.getElementById(noteDivID))
+            const titleDiv = [...div.children[0].children][0];
+            const textDiv = [...div.children[1].children][0];
+        }
         
     }
 })();
@@ -198,17 +202,23 @@ const NotesCtrl = (() =>{
             state.notes = newState;
         }, 
         getNotes(){
-            
             return state.notes;
         },
-        getState(){
-            return state
+        getCurrentNote(noteId){
+             const currentNote = state.notes.find(note => note.id === noteId);
+             return currentNote;
         },
-        editCurrent(editNote){
-            state.currentNote = editNote
-            console.log(state.currentNote)
-            const currentId = parseInt(editNote.id)
+        getState(){
+            return state;
+        },
+        editCurrent(currentNote){
+            state.currentNote = currentNote;
+            const currentId = parseInt(currentNote.id)
+            
             const found = state.notes.find(note => note.id === currentId)
+            console.log(state.currentNote)
+            console.log(found)
+
             if(state.currentNote.title !== ""){
                 found.title = state.currentNote.title
             }
@@ -216,9 +226,11 @@ const NotesCtrl = (() =>{
                 found.text = state.currentNote.text
             }
           const noteIndex = state.notes.map(note => note.id).indexOf(currentId)
+          
           state.notes.splice(noteIndex, 1, found)
           return state.notes
-        }
+        },
+
     }
 })();
 
@@ -291,27 +303,42 @@ const App = ((NotesCtrl, UICtrl, Storage)=>{
         addEventsAtSubmit();
 
         //Storing
-        const newState = Storage.storeNote(newNote, NotesCtrl.getNotes())
-        NotesCtrl.updateNotesArray(newState)
-        NotesCtrl.getNotes()
-        
+        const newState = Storage.storeNote(newNote, NotesCtrl.getNotes());
+        NotesCtrl.updateNotesArray(newState);
+        NotesCtrl.getNotes();
 
         //Reseting State and UI
-        UICtrl.resetColor(state.noteColor)
+        UICtrl.resetColor(state.noteColor);
         
         state.noteColor = '';
         
     }
     
     const getDetails = (e) =>{
-        const { noteSelected } = state
-        console.log(e.target.id)
-        noteSelected[e.target.id] = e.target.value
+        // const noteDivId = e.currentTarget.parentElement.parentElement.id;
+        const { noteSelected } = state;
+        // noteSelected.id = parseInt(noteDivId);
+
+        if(e.target.id === "note-text"){
+            noteSelected.text = e.target.value;
+        } 
+
+        if(e.target.id === "note-title"){
+            noteSelected.title = e.target.value;
+        } 
+        
+        console.log(noteSelected)
         
     }
     const editNote = (e) =>{
-        const noteDivId = e.currentTarget.parentElement.id
-        UICtrl.isAble(noteDivId)
+        const noteDivId = parseInt(e.currentTarget.parentElement.id);
+        state.noteSelected = NotesCtrl.getCurrentNote(noteDivId)
+        UICtrl.displayCurrentNote(state.noteSelected.id)
+        UICtrl.isAble(noteDivId);
+        // const notesArray = NotesCtrl.editCurrent(parseInt(noteDivId))
+        // console.log(notesArray)
+        
+        
         // const { noteSelected } = state
         // noteSelected.id = e.currentTarget.id
         // console.log(noteSelected)
@@ -325,17 +352,27 @@ const App = ((NotesCtrl, UICtrl, Storage)=>{
     }
 
     const saveEditedNote =(e)=>{
-        const noteDivId = e.currentTarget.parentElement.id
-        UICtrl.isNotAble(noteDivId)
+        const { noteSelected } = state
+        const noteDivId = e.currentTarget.parentElement.id;
+        const noteEditedAddedOnArray = NotesCtrl.editCurrent(noteSelected)
+        const newNoteArrayAfterUpdate = NotesCtrl.getNotes(noteEditedAddedOnArray);
+        Storage.setNotes(newNoteArrayAfterUpdate)
+        console.log(newNoteArrayAfterUpdate);
+        UICtrl.isNotAble(noteDivId);
+
+        
+
+        // const notesArray = NotesCtrl.editCurrent(parseInt(noteDivId))
+        // console.log(notesArray)
     }
   
     return {
         async init(){
             
-            const notes = NotesCtrl.getNotes()
+            const notes = NotesCtrl.getNotes();
 
             if(notes.length > 0){
-                UICtrl.populateNotesList(notes)
+                UICtrl.populateNotesList(notes);
             }
 
             loadEvents();
