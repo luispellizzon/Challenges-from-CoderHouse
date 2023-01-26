@@ -8,7 +8,7 @@ const Storage = (() =>{
         },
 
         storeNote(note, notesArray){
-            notesArray.push(note)
+            notesArray.unshift(note)
             localStorage.setItem('notes', JSON.stringify(notesArray))
             return notesArray
         },
@@ -52,15 +52,15 @@ const UICtrl = (()=>{
          populateNotesList(notes){
             let htmlList = "";
             
-            notes.reverse().forEach((note) => {
+            notes.forEach((note) => {
                 const {id, title, text, color} = note;
             htmlList +=  `
                 <div class="sticky-notes-card" id="${id}" style="background-color: ${color}">
                     <div class="notes-title"> 
-                        <textarea id="note-title" placeholder='${title}' disabled></textarea>
+                        <textarea id="note-title" disabled>${title == "" ? "Note title.." : title}</textarea>
                     </div>
                     <div class="notes-paragraph">
-                    <textarea id="note-text" placeholder='${text}' disabled></textarea>                  
+                    <textarea id="note-text" disabled> ${text == "" ? "Note text.." : text}</textarea>                  
                     </div>
                     <button class="edit-card" id="edit-btn">
                         <i class="fa-solid fa-pen"></i>
@@ -113,15 +113,15 @@ const UICtrl = (()=>{
             div.style.backgroundColor = color;
             div.innerHTML = `
                 <div class="notes-title"> 
-                    <textarea id="note-title" placeholder='${title}'></textarea>
+                    <textarea id="note-title" placeholder='${title}' disabled></textarea>
                 </div>
                 <div class="notes-paragraph">
-                  <textarea id="note-text" placeholder='${text}'></textarea>                  
+                  <textarea id="note-text" placeholder='${text}' disabled></textarea>                  
                 </div>
                 <button class="edit-card" id="edit-btn">
                   <i class="fa-solid fa-pen"></i>
                 </button>
-                <button class="save-card active" id="save-btn">
+                <button class="save-card" id="save-btn">
                   save
                 </button>
             `
@@ -160,17 +160,14 @@ const UICtrl = (()=>{
             const colorSelected = document.querySelector(`[data-color='${color}']`)
             colorSelected?.classList.remove('selected')
         },
-        selectedNote(noteDiv){
-            if(!noteDiv.classList.contains(UISelectors.selected)){
-                noteDiv.classList.add(UISelectors.selected)
-            }
+
+        /*Features to be made */
+        // selectedNote(noteDiv){
+        //     if(!noteDiv.classList.contains(UISelectors.selected)){
+        //         noteDiv.classList.add(UISelectors.selected)
+        //     }
             
-        },
-        displayCurrentNote(noteDivID){
-            console.log(document.getElementById(noteDivID))
-            const titleDiv = [...div.children[0].children][0];
-            const textDiv = [...div.children[1].children][0];
-        }
+        // },
         
     }
 })();
@@ -306,12 +303,12 @@ const App = ((NotesCtrl, UICtrl, Storage)=>{
         const newState = Storage.storeNote(newNote, NotesCtrl.getNotes());
         NotesCtrl.updateNotesArray(newState);
         NotesCtrl.getNotes();
+        console.log(NotesCtrl.getNotes())
 
         //Reseting State and UI
         UICtrl.resetColor(state.noteColor);
         
         state.noteColor = '';
-        
     }
     
     const getDetails = (e) =>{
@@ -333,7 +330,7 @@ const App = ((NotesCtrl, UICtrl, Storage)=>{
     const editNote = (e) =>{
         const noteDivId = parseInt(e.currentTarget.parentElement.id);
         state.noteSelected = NotesCtrl.getCurrentNote(noteDivId)
-        UICtrl.displayCurrentNote(state.noteSelected.id)
+        
         UICtrl.isAble(noteDivId);
         // const notesArray = NotesCtrl.editCurrent(parseInt(noteDivId))
         // console.log(notesArray)
