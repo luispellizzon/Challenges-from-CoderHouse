@@ -121,7 +121,7 @@ const UICtrl = (()=>{
                 <button class="edit-card" id="edit-btn">
                   <i class="fa-solid fa-pen"></i>
                 </button>
-                <button class="save-card" id="save-btn">
+                <button class="save-card active" id="save-btn">
                   save
                 </button>
             `
