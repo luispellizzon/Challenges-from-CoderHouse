@@ -1,3 +1,14 @@
+
+const login =(e) =>{
+    e.preventDefault()
+        document.getElementById("form").classList.add("hide")
+        
+            mainApp.classList.remove("hide")
+    }
+
+    const mainApp = document.getElementById("sticky-notes")
+    document.getElementById("submitBtn").addEventListener("click", login)
+    
 /* -- Storage --*/
 const Storage = (() =>{
 
@@ -275,6 +286,7 @@ const App = ((NotesCtrl, UICtrl, Storage)=>{
         UICtrl.selectColor(e, colorSelectedByUser, state)
         state.noteColor = colorSelectedByUser
     }
+    
     const addEventsAtSubmit = () =>{
         // document.querySelector(UISelectors.notesDiv).addEventListener('click', editNote)
         document.getElementById(UISelectors.editNoteBtn).addEventListener('click', editNote)
